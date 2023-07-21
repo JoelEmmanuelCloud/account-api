@@ -23,7 +23,7 @@ const register = async (req, res) => {
 
     const login = async (req, res) => {
         const { email, password } = req.body;
-      
+    
         if (!email || !password) {
           throw new CustomError.BadRequestError('Please provide email and password');
         }
@@ -44,7 +44,7 @@ const register = async (req, res) => {
 const logout = async (req, res) => {
     res.cookie('token', 'logout', {
       httpOnly: true,
-      expires: new Date(Date.now() + 1000),
+      expires: new Date(Date.now()),
     });
     res.status(StatusCodes.OK).json({ msg: 'user logged out!' });
   };
