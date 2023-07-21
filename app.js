@@ -1,31 +1,20 @@
+require('express-async-errors');
 require('dotenv').config();
 const express = require('express');
-require('express-async-errors');
+const connectDB = require('./database/connect');
+const notFoundMiddleware = require('./middleware/notFound');
+const errorHandlerMiddleware = require('./middleware/errorHandler');
+const authRouter = require('./routes/authRoute');
 
 
 const app = express();
-// const {validateSignup} = require('./validator');
-
 app.use(express.json());
-const connectDB = require('./database/connect');
 
-const notFoundMiddleware = require('./middleware/notFound');
-const errorHandlerMiddleware = require('./middleware/errorHandler');
-
-const port = process.env.PORT || 3000;
-
-// app.post('/signup', (req, res) => {
-//     const {error, value} = validateSignup(req.body);
-
-//     if (error) {
-//         console.log(error);
-//         return res.send(error.details);
-//     }
-//     res.send('Successfully signed up');
-// });
-
+app.use('/api/v1/auth', authRouter);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
+
+const port = process.env.PORT || 3000;
 
 const start = async () => { 
     try {
