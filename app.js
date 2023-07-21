@@ -1,14 +1,20 @@
 require('express-async-errors');
 require('dotenv').config();
-const express = require('express');
 const connectDB = require('./database/connect');
 const notFoundMiddleware = require('./middleware/notFound');
 const errorHandlerMiddleware = require('./middleware/errorHandler');
 const authRouter = require('./routes/authRoute');
+const cookieParser = require('cookie-parser')
 
-
+const express = require('express');
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
+
+app.get('/', (req, res) => {
+    console.log(req.cookies);
+    res.send('Welcome')
+});
 
 app.use('/api/v1/auth', authRouter);
 app.use(notFoundMiddleware);
