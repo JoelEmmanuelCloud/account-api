@@ -9,26 +9,26 @@ const authenticateAccount = async (req, res, next) => {
   }
 
   try {
-    const { name, accountId} = isTokenValid({ token });
-    req.account = { name, accountId};
+    const { firstName, lastName, accountId} = isTokenValid({ token });
+    req.account = { firstName, lastName, accountId};
     next();
   } catch (error) {
     throw new CustomError.UnauthenticatedError('Authentication Invalid');
   }
 };
 
-const authorizePermissions = (...roles) => {
-  return (req, res, next) => {
-    if (!roles.includes(req.account.role)) {
-      throw new CustomError.UnauthorizedError(
-        'Unauthorized to access this route'
-      );
-    }
-    next();
-  };
-};
+// const authorizePermissions = (...roles) => {
+//   return (req, res, next) => {
+//     if (!roles.includes(req.account.role)) {
+//       throw new CustomError.UnauthorizedError(
+//         'Unauthorized to access this route'
+//       );
+//     }
+//     next();
+//   };
+// };
 
 module.exports = {
   authenticateAccount,
-  authorizePermissions,
+//   authorizePermissions,
 };

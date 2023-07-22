@@ -24,14 +24,6 @@ const createAccount = async (req, res) => {
 
 };
 
-const CurrentAccount = async (req, res) => {
-  const account = await Account.findOne({ _id: req.params.id }).select('-password');
-  if (!account) {
-    throw new CustomError.NotFoundError(`No account with id : ${req.params.id}`);
-  }
-  checkPermissions(req.account, account._id);
-  res.status(StatusCodes.OK).json({ account });
-};
 
 const getCurrentAccount = async (req, res) => {
   res.status(StatusCodes.OK).json({ account: req.account });
@@ -85,6 +77,7 @@ const deleteCurrentAccount = async (req, res) => {
   };
 
 module.exports = {
+    getCurrentAccount,
     createAccount,
     updateCurrentAccount,
     updateAccountPassword,

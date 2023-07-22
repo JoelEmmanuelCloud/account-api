@@ -1,21 +1,22 @@
-// const express = require('express');
-// const router = express.Router();
-// // const {
-// //   authenticateUser,
-// //   authorizePermissions,
-// // } = require('../middleware/authentication');
-// const {
-//   getSingleUser,
-//   showCurrentUser,
-//   updateUser,
-//   updateUserPassword,
-// } = require('../controllers/accountController');
+const express = require('express');
+const router = express.Router();
+const {
+  authenticateAccount,
+} = require('../middleware/authentication');
+const {
+    getCurrentAccount,
+    createAccount,
+    updateCurrentAccount,
+    updateAccountPassword,
+    deleteCurrentAccount,
+} = require('../controllers/accountController');
 
 
-// router.route('/showMe').get(authenticateUser, showCurrentUser);
-// router.route('/updateUser').patch(authenticateUser, updateUser);
-// router.route('/updateUserPassword').patch(authenticateUser, updateUserPassword);
+router.route('/createAccount').post(createAccount);
+router.route('/getCurrentAccount').get(authenticateAccount, getCurrentAccount);
+router.route('/updateCurrentAccount').patch(authenticateAccount, updateCurrentAccount);
+router.route('/updateAccountPassword').patch(authenticateAccount, updateAccountPassword);
+router.route('/deleteCurrentAccount').get(authenticateAccount, deleteCurrentAccount);
 
-// router.route('/:id').get(authenticateUser, getSingleUser);
 
-// module.exports = router;
+module.exports = router;
