@@ -1,7 +1,7 @@
 const Account = require('../models/account');
 const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../errors');
-const { attachCookiesToResponse} = require('../utils');
+const { attachCookiesToResponse, createTokenAccount} = require('../utils');
 
 
     const login = async (req, res) => {
@@ -19,7 +19,7 @@ const { attachCookiesToResponse} = require('../utils');
         if (!isPasswordCorrect) {
           throw new CustomError.UnauthenticatedError('Invalid Credentials');
         }
-        const tokenAccount = {firstName:account.firstName, lastName: account.lastName, accountId:account._id};
+        const tokenAccount = createTokenAccount(account);
         attachCookiesToResponse({ res, account: tokenAccount });
       
         res.status(StatusCodes.OK).json({ account: tokenAccount });

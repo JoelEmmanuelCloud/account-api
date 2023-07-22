@@ -44,15 +44,14 @@ const accountSchema = new mongoose.Schema({
 });
 
 accountSchema.pre('save', async function () {
-  // console.log(this.modifiedPaths());
-  // console.log(this.isModified('name'));
+
   if (!this.isModified('password')) return;
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-accountSchema.methods.comparePassword = async function (canditatePassword) {
-  const isMatch = await bcrypt.compare(canditatePassword, this.password);
+accountSchema.methods.comparePassword = async function (accountPassword) {
+  const isMatch = await bcrypt.compare(accountPassword, this.password);
   return isMatch;
 };
 

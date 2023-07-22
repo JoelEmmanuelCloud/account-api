@@ -7,7 +7,7 @@ const {
     getCurrentAccount,
     createAccount,
     updateCurrentAccount,
-    updateAccountPassword,
+    // updateAccountPassword,
     deleteCurrentAccount,
 } = require('../controllers/accountController');
 
@@ -15,7 +15,7 @@ const {
 router.route('/createAccount').post(createAccount);
 router.route('/getCurrentAccount').get(authenticateAccount, getCurrentAccount);
 router.route('/updateCurrentAccount').patch(authenticateAccount, updateCurrentAccount);
-router.route('/updateAccountPassword').patch(authenticateAccount, updateAccountPassword);
+// router.route('/updateAccountPassword').patch(authenticateAccount, updateAccountPassword);
 router.route('/deleteCurrentAccount').get(authenticateAccount, deleteCurrentAccount);
 
 
