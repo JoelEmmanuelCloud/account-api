@@ -24,10 +24,16 @@ const createAccount = async (req, res) => {
 
 };
 
-
 const getCurrentAccount = async (req, res) => {
-  res.status(StatusCodes.OK).json({ account: req.account });
-};
+    const loggedInAccountId = req.account.accountId;
+    const account = await Account.findOne({ _id: loggedInAccountId }).select('-password');
+  
+    if (!account) {
+      throw new CustomError.NotFoundError(`No account with id: ${loggedInAccountId}`);
+    }
+  
+    res.status(StatusCodes.OK).json({ account });
+  };
 
 const updateCurrentAccount = async (req, res) => {
   const { email, name } = req.body;
@@ -64,18 +70,19 @@ const updateAccountPassword = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: 'Success! Password Updated.' });
 };
 const deleteCurrentAccount = async (req, res) => {
-    const { id: productId } = req.params;
+    const { id: accountId } = req.params;
   
-    const product = await Product.findOne({ _id: productId });
+    const account = await Account.findOne({ _id: accountId });
   
-    if (!product) {
-      throw new CustomError.NotFoundError(`No product with id : ${productId}`);
+    if (!account) {
+      throw new CustomError.NotFoundError(`No account with id: ${accountId}`);
     }
   
-    await product.remove();
-    res.status(StatusCodes.OK).json({ msg: 'Success! Product removed.' });
+    await Account.deleteOne({ _id: accountId });
+  
+    res.status(StatusCodes.OK).json({ msg: 'Success! Account Deleted.' });
   };
-
+  
 module.exports = {
     getCurrentAccount,
     createAccount,
