@@ -13,11 +13,11 @@ const { attachCookiesToResponse, createTokenAccount} = require('../utils');
         const account = await Account.findOne({ email });
       
         if (!account) {
-          throw new CustomError.UnauthenticatedError('Invalid Credentials');
+          throw new CustomError.UnauthenticatedError('Invalid Password or Email');
         }
         const isPasswordCorrect = await account.comparePassword(password);
         if (!isPasswordCorrect) {
-          throw new CustomError.UnauthenticatedError('Invalid Credentials');
+          throw new CustomError.UnauthenticatedError('Invalid Password');
         }
         const tokenAccount = createTokenAccount(account);
         attachCookiesToResponse({ res, account: tokenAccount });
