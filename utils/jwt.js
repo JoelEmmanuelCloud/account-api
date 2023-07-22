@@ -9,8 +9,8 @@ const createJWT = ({ payload }) => {
 
 const isTokenValid = ({ token }) => jwt.verify(token, process.env.JWT_SECRET);
 
-const attachCookiesToResponse = ({ res, user }) => {
-    const token = createJWT({ payload: user });
+const attachCookiesToResponse = ({ res, account }) => {
+    const token = createJWT({ payload: account });
 
     const oneDay = 1000 * 60 * 60 * 24;
 

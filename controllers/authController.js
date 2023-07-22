@@ -1,25 +1,8 @@
-const User = require('../models/user');
+const Account = require('../models/account');
 const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../errors');
 const { attachCookiesToResponse} = require('../utils');
 
-
-const register = async (req, res) => {
-    const {email} = req.body;
-
-    const emailAlreadyExist = await User.findOne({email});
-    if  (emailAlreadyExist) {
-        throw new CustomError.BadRequestError('Email already exists');
-    }
-    
-    const user = await User.create(req.body);
-    const tokenUser = {firstName:user.firstName, lastName: user.lastName, userId:user._id};
-    attachCookiesToResponse({res, user: tokenUser});
-
-    
-    res.status(StatusCodes.CREATED).json({user: tokenUser});
-
-};
 
     const login = async (req, res) => {
         const { email, password } = req.body;
@@ -27,28 +10,28 @@ const register = async (req, res) => {
         if (!email || !password) {
           throw new CustomError.BadRequestError('Please provide email and password');
         }
-        const user = await User.findOne({ email });
+        const account = await Account.findOne({ email });
       
-        if (!user) {
+        if (!account) {
           throw new CustomError.UnauthenticatedError('Invalid Credentials');
         }
-        const isPasswordCorrect = await user.comparePassword(password);
+        const isPasswordCorrect = await account.comparePassword(password);
         if (!isPasswordCorrect) {
           throw new CustomError.UnauthenticatedError('Invalid Credentials');
         }
-        const tokenUser = {firstName:user.firstName, lastName: user.lastName, userId:user._id};
-        attachCookiesToResponse({ res, user: tokenUser });
+        const tokenAccount = {firstName:account.firstName, lastName: account.lastName, accountId:account._id};
+        attachCookiesToResponse({ res, account: tokenAccount });
       
-        res.status(StatusCodes.OK).json({ user: tokenUser });
+        res.status(StatusCodes.OK).json({ account: tokenAccount });
 }
 const logout = async (req, res) => {
     res.cookie('token', 'logout', {
       httpOnly: true,
       expires: new Date(Date.now()),
     });
-    res.status(StatusCodes.OK).json({ msg: 'user logged out!' });
+    res.status(StatusCodes.OK).json({ msg: 'account logged out!' });
   };
   
 
 
-module.exports = {register, login, logout};
+module.exports = { login, logout};

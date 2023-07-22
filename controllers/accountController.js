@@ -1,63 +1,92 @@
-const User = require('../models/user');
+const Account = require('../models/account');
 const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../errors');
 const {
-  createTokenUser,
+  createTokenAccount,
   attachCookiesToResponse,
   checkPermissions,
 } = require('../utils');
 
+const createAccount = async (req, res) => {
+    const {email} = req.body;
 
+    const emailAlreadyExist = await Account.findOne({email});
+    if  (emailAlreadyExist) {
+        throw new CustomError.BadRequestError('Email already exists');
+    }
+    
+    const account = await Account.create(req.body);
+    const tokenAccount = {firstName:account.firstName, lastName: account.lastName, accountId:account._id};
+    attachCookiesToResponse({res, account: tokenAccount});
 
-const getSingleUser = async (req, res) => {
-  const user = await User.findOne({ _id: req.params.id }).select('-password');
-  if (!user) {
-    throw new CustomError.NotFoundError(`No user with id : ${req.params.id}`);
+    
+    res.status(StatusCodes.CREATED).json({account: tokenAccount});
+
+};
+
+const CurrentAccount = async (req, res) => {
+  const account = await Account.findOne({ _id: req.params.id }).select('-password');
+  if (!account) {
+    throw new CustomError.NotFoundError(`No account with id : ${req.params.id}`);
   }
-  checkPermissions(req.user, user._id);
-  res.status(StatusCodes.OK).json({ user });
+  checkPermissions(req.account, account._id);
+  res.status(StatusCodes.OK).json({ account });
 };
 
-const showCurrentUser = async (req, res) => {
-  res.status(StatusCodes.OK).json({ user: req.user });
+const getCurrentAccount = async (req, res) => {
+  res.status(StatusCodes.OK).json({ account: req.account });
 };
-// update user with user.save()
-const updateUser = async (req, res) => {
+
+const updateCurrentAccount = async (req, res) => {
   const { email, name } = req.body;
   if (!email || !name) {
     throw new CustomError.BadRequestError('Please provide all values');
   }
-  const user = await User.findOne({ _id: req.user.userId });
+  const account = await Account.findOne({ _id: req.account.accountId });
 
-  user.email = email;
-  user.name = name;
+  account.email = email;
+  account.name = name;
 
-  await user.save();
+  await account.save();
 
-  const tokenUser = createTokenUser(user);
-  attachCookiesToResponse({ res, user: tokenUser });
-  res.status(StatusCodes.OK).json({ user: tokenUser });
+  const tokenAccount = createTokenAccount(account);
+  attachCookiesToResponse({ res, account: tokenAccount });
+  res.status(StatusCodes.OK).json({ account: tokenAccount });
 };
-const updateUserPassword = async (req, res) => {
+
+const updateAccountPassword = async (req, res) => {
   const { oldPassword, newPassword } = req.body;
   if (!oldPassword || !newPassword) {
     throw new CustomError.BadRequestError('Please provide both values');
   }
-  const user = await User.findOne({ _id: req.user.userId });
+  const account = await Account.findOne({ _id: req.account.accountId });
 
-  const isPasswordCorrect = await user.comparePassword(oldPassword);
+  const isPasswordCorrect = await account.comparePassword(oldPassword);
   if (!isPasswordCorrect) {
     throw new CustomError.UnauthenticatedError('Invalid Credentials');
   }
-  user.password = newPassword;
+  
+  account.password = newPassword;
 
-  await user.save();
+  await account.save();
   res.status(StatusCodes.OK).json({ msg: 'Success! Password Updated.' });
 };
+const deleteCurrentAccount = async (req, res) => {
+    const { id: productId } = req.params;
+  
+    const product = await Product.findOne({ _id: productId });
+  
+    if (!product) {
+      throw new CustomError.NotFoundError(`No product with id : ${productId}`);
+    }
+  
+    await product.remove();
+    res.status(StatusCodes.OK).json({ msg: 'Success! Product removed.' });
+  };
 
 module.exports = {
-  getSingleUser,
-  showCurrentUser,
-  updateUser,
-  updateUserPassword,
+    createAccount,
+    updateCurrentAccount,
+    updateAccountPassword,
+    deleteCurrentAccount,
 };
