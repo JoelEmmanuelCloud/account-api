@@ -5,5 +5,5 @@ const updateAccount = require('./updateAccountValidator')
 module.exports = {
     createAccount,
     login,
-    updateAccount
+    updateAccount,
 }
