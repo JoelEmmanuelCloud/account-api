@@ -6,9 +6,10 @@ const errorHandlerMiddleware = require('./middleware/errorHandler');
 const cookieParser = require('cookie-parser')
 const authRouter = require('./routes/authRoute');
 const accountRouter = require('./routes/accountRoute');
-
 const express = require('express');
+
 const app = express();
+
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
 
@@ -19,6 +20,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/account', accountRouter);
+
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 

@@ -29,13 +29,15 @@ const getCurrentAccount = async (req, res) => {
   
     res.status(StatusCodes.OK).json({ account });
   };
+
+
   const updateCurrentAccount = async (req, res) => {
     const { password, confirmPassword, ...otherFields } = req.body;
 
     if (password !== undefined || confirmPassword !== undefined) {
         
         if (!password || !confirmPassword) {
-            throw new CustomError.BadRequestError('Please provide both values for password update');
+            throw new CustomError.BadRequestError('Please provide both password and confirm password values.');
         }
 
         if (password !== confirmPassword) {

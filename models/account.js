@@ -1,29 +1,38 @@
-const validator = require('validator');
-const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const validator = require('validator');
 
 const accountSchema = new mongoose.Schema({
   firstName: {
     type: String,
-    required: [true, 'First name is required']
+    required: [true, 'First name is required'],
+    trim: true,
+    minlength: 2,
+    maxlength: 50
   },
   lastName: {
     type: String,
-    required: [true, 'Last name is required']
+    required: [true, 'Last name is required'],
+    trim: true,
+    minlength: 2,
+    maxlength: 50
   },
   email: {
     type: String,
     required: [true, 'Email is required'],
+    unique: true,
+    trim: true,
     validate: {
-        validator:validator.isEmail, 
-        message: 'Provide a valid email address'
+      validator: validator.isEmail,
+      message: 'Provide a valid email address'
     }
   },
   password: {
     type: String,
-    required: [true, 'Password is required']
+    required: [true, 'Password is required'],
+    minlength: 8,
+    maxlength: 100
   },
-
   carType: {
     type: String,
     enum: ['SEDAN', 'SUV', 'HATCHBACK', 'TRUCK', 'OTHER'],
@@ -31,20 +40,24 @@ const accountSchema = new mongoose.Schema({
   },
   zipCode: {
     type: String,
-    required: [true, 'Zip code is required']
+    required: [true, 'Zip code is required'],
+    trim: true,
   },
   city: {
     type: String,
-    required: [true, 'City is required']
+    required: [true, 'City is required'],
+    trim: true,
+    maxlength: 20
   },
   country: {
     type: String,
-    required: [true, 'Country is required']
+    required: [true, 'Country is required'],
+    trim: true,
+    maxlength: 20
   }
 });
 
 accountSchema.pre('save', async function () {
-
   if (!this.isModified('password')) return;
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);

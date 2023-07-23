@@ -18,6 +18,4 @@ const authenticateAccount = async (req, res, next) => {
 };
 
 
-module.exports = {
-  authenticateAccount,
-};
+module.exports = authenticateAccount
