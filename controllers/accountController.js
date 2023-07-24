@@ -1,36 +1,34 @@
-const Account = require('../models/account')
+const User = require('../models/user')
 const { StatusCodes } = require('http-status-codes')
 const CustomError = require('../errors')
 
 const createAccount = async (req, res) => {
     const { email } = req.body
 
-    const emailAlreadyExist = await Account.findOne({ email })
+    const emailAlreadyExist = await User.findOne({ email })
     if (emailAlreadyExist) {
         throw new CustomError.BadRequestError('Email already exists')
     }
 
-    const account = await Account.create(req.body)
+    const user = await User.create(req.body)
 
-    const accountWithoutPassword = { ...account.toObject() }
-    delete accountWithoutPassword.password
+    const userWithoutPassword = { ...user.toObject() }
+    delete userWithoutPassword.password
 
-    res.status(StatusCodes.CREATED).json({ account: accountWithoutPassword })
+    res.status(StatusCodes.CREATED).json({ user: userWithoutPassword })
 }
 
 const getCurrentAccount = async (req, res) => {
-    const loggedInAccountId = req.account.accountId
-    const account = await Account.findOne({ _id: loggedInAccountId }).select(
-        '-password'
-    )
+    const loggedInUserId = req.user.userId
+    const user = await User.findOne({ _id: loggedInUserId }).select('-password')
 
-    if (!account) {
+    if (!user) {
         throw new CustomError.NotFoundError(
-            `No account with id: ${loggedInAccountId}`
+            `No user with id: ${loggedInUserId}`
         )
     }
 
-    res.status(StatusCodes.OK).json({ account })
+    res.status(StatusCodes.OK).json({ user })
 }
 
 const updateCurrentAccount = async (req, res) => {
@@ -49,47 +47,47 @@ const updateCurrentAccount = async (req, res) => {
             )
         }
 
-        const account = await Account.findOne({ _id: req.account.accountId })
+        const user = await User.findOne({ _id: req.user.userId })
 
         if (password) {
-            const isPrevious = await account.comparePassword(password)
+            const isPrevious = await user.comparePassword(password)
             if (isPrevious) {
                 throw new CustomError.UnauthenticatedError(
                     'This was your previous password, input a new one'
                 )
             }
 
-            account.password = password
-            await account.save()
+            user.password = password
+            await user.save()
         }
     }
 
     if (Object.keys(otherFields).length > 0) {
-        const account = await Account.findOne({ _id: req.account.accountId })
+        const user = await User.findOne({ _id: req.user.userId })
 
-        Object.assign(account, otherFields)
+        Object.assign(user, otherFields)
 
-        await account.save()
+        await user.save()
     }
 
-    const updatedAccount = await Account.findOne({ _id: req.account.accountId })
+    const updatedUser = await User.findOne({ _id: req.user.userId })
         .select('-password')
         .exec()
-    res.status(StatusCodes.OK).json({ account: updatedAccount })
+    res.status(StatusCodes.OK).json({ user: updatedUser })
 }
 
 const deleteCurrentAccount = async (req, res) => {
-    const accountId = req.account.accountId
+    const userId = req.user.userId
 
-    const account = await Account.findOne({ _id: accountId })
+    const user = await User.findOne({ _id: userId })
 
-    if (!account) {
-        throw new CustomError.NotFoundError(`No account with id: ${accountId}`)
+    if (!user) {
+        throw new CustomError.NotFoundError(`No user with id: ${userId}`)
     }
 
-    await Account.deleteOne({ _id: accountId })
+    await User.deleteOne({ _id: userId })
 
-    res.status(StatusCodes.OK).json({ msg: 'Success! Account Deleted.' })
+    res.status(StatusCodes.OK).json({ msg: 'Success! User Deleted.' })
 }
 
 module.exports = {

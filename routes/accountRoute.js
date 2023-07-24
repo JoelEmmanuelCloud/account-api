@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const authenticateAccount = require('../middleware/authentication')
+const authenticateUser = require('../middleware/authentication')
 const Validate = require('../middleware/validator')
 const {
     getCurrentAccount,
@@ -10,12 +10,12 @@ const {
 } = require('../controllers/accountController')
 
 router.route('/createAccount').post(Validate('createAccount'), createAccount)
-router.route('/getCurrentAccount').get(authenticateAccount, getCurrentAccount)
+router.route('/getCurrentAccount').get(authenticateUser, getCurrentAccount)
 router
     .route('/updateCurrentAccount')
-    .patch(authenticateAccount, Validate('updateAccount'), updateCurrentAccount)
+    .patch(authenticateUser, Validate('updateAccount'), updateCurrentAccount)
 router
     .route('/deleteCurrentAccount')
-    .delete(authenticateAccount, deleteCurrentAccount)
+    .delete(authenticateUser, deleteCurrentAccount)
 
 module.exports = router

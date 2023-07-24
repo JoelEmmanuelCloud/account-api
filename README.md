@@ -8,12 +8,12 @@ This project is a CRUD application for managing user accounts. The application u
 
 The application allows users to:
 
-* Create a new account.
-* Login and logout.
-* Read, update, and delete their accounts.
-* View and update their own user information.
+-   Create a new account.
+-   Login and logout.
+-   Read, update, and delete their accounts.
+-   View and update their own user information.
 
-    The application is secured using token-based authentication, providing a robust level of security.
+The application is secured using token-based authentication, providing a robust level of security.
 
 ## Installation Guide
 
@@ -32,7 +32,7 @@ To get the development environment up and running, follow these steps:
 
     ```bash
     JWT_SECRET=jwtSecret
-    JWT_LIFETIME=1d 
+    JWT_LIFETIME=1d
     MONGO_URL = MongoDB connection string
     ```
 
@@ -42,13 +42,13 @@ To get the development environment up and running, follow these steps:
 
 3. All dependencies have been pre-installed in the package.json file.
 
-* Install the required dependencies using npm:
+-   Install the required dependencies using npm:
 
     ```bash
     npm i or npm install
     ```
 
-* Start the application with:
+-   Start the application with:
 
     ```bash
     npm start
@@ -66,99 +66,99 @@ Once the application is up and running, users can interact with it through API e
 
 #### POST /api/v1/account/createAccount
 
-* Description: Creates a new user account.
-* Request Body:
-account/createAccount
+-   Description: Creates a new user account.
+-   Request Body:
+    account/createAccount
 
-    ```json
-    {
-    "firstName": "John",
-    "lastName": "Doe",
-    "email": "john.doe@provider.com",
-    "password": "password",
-    "passwordConfirm": "password",
-    "carType": "SEDAN",
-    "zipCode": "93950-000",
-    "city": "Anywhere City",
-    "country": "Brazil"
-    }
-    ```
+        ```json
+        {
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "john.doe@provider.com",
+        "password": "password",
+        "passwordConfirm": "password",
+        "carType": "SEDAN",
+        "zipCode": "93950-000",
+        "city": "Anywhere City",
+        "country": "Brazil"
+        }
+        ```
 
 #### Expected Response
 
-* Status Code: 201 Created
-* Response Body:
+-   Status Code: 201 Created
+-   Response Body:
 
     ```json
-        {
-    "_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    "firstName": "John",
-    "lastName": "Doe",
-    "email": "john.doe@provider.com",
-    "carType": "SEDAN",
-    "zipCode": "93950-000",
-    "city": "Anywhere City",
-    "country": "Brazil"
+    {
+        "_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "john.doe@provider.com",
+        "carType": "SEDAN",
+        "zipCode": "93950-000",
+        "city": "Anywhere City",
+        "country": "Brazil"
     }
     ```
 
 #### GET /api/v1/account/getCurrentAccount
 
-* Description: Retrieves the current user account.
+-   Description: Retrieves the current user account.
 
 #### Expected Response
 
-* Status Code: 200 OK
-* Response Body:
+-   Status Code: 200 OK
+-   Response Body:
 
     ```json
-        {
-  "firstName": "John",
-  "lastName": "Doe",
-  "email": "john.doe@provider.com",
-  "password": "password",
-  "passwordConfirm": "password",
-  "carType": "SEDAN",
-  "zipCode": "93950-000",
-  "city": "Anywhere City",
-  "country": "Brazil"
+    {
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "john.doe@provider.com",
+        "password": "password",
+        "passwordConfirm": "password",
+        "carType": "SEDAN",
+        "zipCode": "93950-000",
+        "city": "Anywhere City",
+        "country": "Brazil"
     }
     ```
 
 #### PATCH /api/v1/updatesCurrentAccount
 
-* Description: Updates the current user account.
-* Request Body:
+-   Description: Updates the current user account.
+-   Request Body:
 
     ```json
     {
-    "carType": "SEDAN",
-    "zipCode": "93950-000",
-    "city": "Anywhere City"
+        "carType": "SEDAN",
+        "zipCode": "93950-000",
+        "city": "Anywhere City"
     }
-     ```
+    ```
 
 #### Expected Response
 
-* Status Code: 200 OK
-* Response Body:
+-   Status Code: 200 OK
+-   Response Body:
 
 ```json
-    {
+{
     "carType": "SEDAN",
     "zipCode": "93950-000",
     "city": "Anywhere City"
-    }
+}
 ```
 
 #### GET /api/v1/deleteCurrentAccount
 
-* Description: Retrieves the current user account.
+-   Description: Retrieves the current user account.
 
 #### Expected Response
 
-* Status Code: 200 OK
-* Response Body:
+-   Status Code: 200 OK
+-   Response Body:
 
     ```json
     {
@@ -170,56 +170,55 @@ account/createAccount
 
 #### POST /api/v1/auth/login
 
-* Description: Authenticate user credentials for login.
-* Request Body:
+-   Description: Authenticate user credentials for login.
+-   Request Body:
 
     ```json
     {
-  "email": "john.doe@provider.com",
-  "password": "password"
+        "email": "john.doe@provider.com",
+        "password": "password"
     }
-
     ```
 
 #### Expected Response
 
-* Status Code: 200 OK
-* Response Body:
-
-    ```json
-        {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-  "user": {
-    "_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    "firstName": "John",
-    "lastName": "Doe"
-  }
-        }
-    ```
-    
-### DELETE /api/v1/auth/logout
-
-* Description: Logout the authenticated user.
-
-#### Expected Response:
-
-* Status Code: 200 OK
-* Response Body:
+-   Status Code: 200 OK
+-   Response Body:
 
     ```json
     {
-    "message": "account logged out!"
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "user": {
+            "_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "firstName": "John",
+            "lastName": "Doe"
+        }
+    }
+    ```
+
+### DELETE /api/v1/auth/logout
+
+-   Description: Logout the authenticated user.
+
+#### Expected Response:
+
+-   Status Code: 200 OK
+-   Response Body:
+
+    ```json
+    {
+        "message": "account logged out!"
     }
     ```
 
 ## Technologies Used
 
-* Node.js
-* Express.js
-* MongoDB
-* JSON Web Tokens (JWT)
-* Joi (Input validation)
-* Prettier/ESLint (Code formatting and linting)
+-   Node.js
+-   Express.js
+-   MongoDB
+-   JSON Web Tokens (JWT)
+-   Joi (Input validation)
+-   Prettier/ESLint (Code formatting and linting)
 
 ## Author
 

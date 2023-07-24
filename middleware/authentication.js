@@ -1,7 +1,7 @@
 const CustomError = require('../errors')
 const { isTokenValid } = require('../utils')
 
-const authenticateAccount = async (req, res, next) => {
+const authenticateUser = async (req, res, next) => {
     const token = req.signedCookies.token
 
     if (!token) {
@@ -9,12 +9,12 @@ const authenticateAccount = async (req, res, next) => {
     }
 
     try {
-        const { firstName, lastName, accountId } = isTokenValid({ token })
-        req.account = { firstName, lastName, accountId }
+        const { firstName, lastName, userId } = isTokenValid({ token })
+        req.user = { firstName, lastName, userId }
         next()
     } catch (error) {
         throw new CustomError.UnauthenticatedError('Authentication Invalid')
     }
 }
 
-module.exports = authenticateAccount
+module.exports = authenticateUser
