@@ -14,7 +14,6 @@ const updateAccountJoiSchema = Joi.object({
                 'First name cannot be longer than {#limit} characters.',
             'string.regex':
                 'First name should contain only letters, spaces, hyphens, and apostrophes.',
-            
         }),
     lastName: Joi.string()
         .trim()
@@ -29,7 +28,6 @@ const updateAccountJoiSchema = Joi.object({
                 'Last name cannot be longer than {#limit} characters.',
             'string.regex':
                 'Last name should contain only letters, spaces, hyphens, and apostrophes.',
-            
         }),
     email: Joi.string().trim().email().messages({
         'string.base': 'Email should be a string.',
@@ -40,7 +38,6 @@ const updateAccountJoiSchema = Joi.object({
         'string.empty': 'Password cannot be empty.',
         'string.min': 'Password should be at least {#limit} characters long.',
         'string.max': 'Password cannot be longer than {#limit} characters.',
-        
     }),
     confirmPassword: Joi.valid(Joi.ref('password')).messages({
         'any.only': 'Confirm password must match the password.',
@@ -52,7 +49,6 @@ const updateAccountJoiSchema = Joi.object({
             'string.base': 'Car type should be a string.',
             'string.empty': 'Car type cannot be empty.',
             'any.only': 'Invalid car type.',
-            
         }),
     zipCode: Joi.string().allow('').messages({
         'string.base': 'Zip code should be a string.',
@@ -67,7 +63,6 @@ const updateAccountJoiSchema = Joi.object({
             'string.empty': 'City cannot be empty.',
             'string.regex':
                 'City should contain only letters, spaces, hyphens, and apostrophes.',
-            
         }),
     country: Joi.string()
         .trim()
@@ -78,7 +73,6 @@ const updateAccountJoiSchema = Joi.object({
             'string.max': 'Country cannot be longer than {#limit} characters.',
             'string.regex':
                 'Country should contain only letters, spaces, hyphens, and apostrophes.',
-            
         }),
 }).options({ abortEarly: false })
 

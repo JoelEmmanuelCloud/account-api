@@ -70,19 +70,19 @@ Once the application is running, users can interact with it through API endpoint
 -   Request Body:
     account/createAccount
 
-  ```json
-      {
-        "firstName": "John",
-        "lastName": "Doe",
-        "email": "john.doe@provider.com",
-        "password": "password",
-        "passwordConfirm": "password",
-        "carType": "SEDAN",
-        "zipCode": "93950-000",
-        "city": "Anywhere City",
-        "country": "Brazil"
-      }
-  ```
+```json
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@provider.com",
+    "password": "password",
+    "passwordConfirm": "password",
+    "carType": "SEDAN",
+    "zipCode": "93950-000",
+    "city": "Anywhere City",
+    "country": "Brazil"
+}
+```
 
 #### Expected Response
 
