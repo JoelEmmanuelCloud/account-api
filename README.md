@@ -13,7 +13,7 @@ The application allows users to:
 -   Read, update, and delete their accounts.
 -   View and update their own user information.
 
-The application is secured using token-based authentication, providing a robust level of security.
+The application is secured using token-based authentication, providing robust security.
 
 ## Installation Guide
 
@@ -36,9 +36,9 @@ To get the development environment up and running, follow these steps:
     MONGO_URL = MongoDB connection string
     ```
 
-    `JWT_SECRET` is Secret key for JWT token generation.
+    `JWT_SECRET` is the Secret key for JWT token generation.
 
-    If you don't already have a MongoDB account, you will need to create one to obtain your `MongoDB connection string` and establish a connection. Visit the [MongoDB](https://account.mongodb.com) website to create your account and replace `MongoDB connection string` with your actual connection string.
+    If you don't already have a MongoDB account, you must create one to obtain your `MongoDB connection string` and establish a connection. Visit the [MongoDB](https://account.mongodb.com) website to create your account and replace the `MongoDB connection string` with your actual connection string.
 
 3. All dependencies have been pre-installed in the package.json file.
 
@@ -58,7 +58,7 @@ To get the development environment up and running, follow these steps:
 
 ## Usage
 
-Once the application is up and running, users can interact with it through API endpoints using tools like Postman.
+Once the application is running, users can interact with it through API endpoints using tools like Postman.
 
 ## API Endpoints
 
@@ -70,7 +70,7 @@ Once the application is up and running, users can interact with it through API e
 -   Request Body:
     account/createAccount
 
-        ``` json
+  ```json
         {
         "firstName": "John",
         "lastName": "Doe",
@@ -82,7 +82,7 @@ Once the application is up and running, users can interact with it through API e
         "city": "Anywhere City",
         "country": "Brazil"
         }
-        ```
+  ```
 
 #### Expected Response
 
