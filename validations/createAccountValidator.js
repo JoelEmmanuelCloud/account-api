@@ -5,74 +5,94 @@ const createAccountJoiSchema = Joi.object({
         .trim()
         .min(2)
         .max(50)
-        .regex(/^[a-z]+$/)
+        .regex(/^[a-zA-Z\s]+$/i)
         .required()
         .messages({
+            'string.base': 'First name should be a string.',
+            'string.empty': 'First name cannot be empty.',
             'string.min':
                 'First name should be at least {#limit} characters long.',
             'string.max':
                 'First name cannot be longer than {#limit} characters.',
-            'string.regex': 'First name should contain only lowercase letters.',
+            'string.lowercase':
+                'First name should contain only lowercase letters.',
+            'string.uppercase':
+                'First name should contain only uppercase letters.',
             'any.required': 'First name is required.',
         }),
     lastName: Joi.string()
         .trim()
         .min(2)
         .max(50)
-        .regex(/^[a-z]+$/)
+        .regex(/^[a-zA-Z\s]+$/i)
         .required()
         .messages({
+            'string.base': 'Last name should be a string.',
+            'string.empty': 'Last name cannot be empty.',
             'string.min':
                 'Last name should be at least {#limit} characters long.',
             'string.max':
                 'Last name cannot be longer than {#limit} characters.',
-            'string.regex': 'Last name should contain only lowercase letters.',
+            'string.lowercase':
+                'Last name should contain only lowercase letters.',
+            'string.uppercase':
+                'Last name should contain only uppercase letters.',
             'any.required': 'Last name is required.',
         }),
     email: Joi.string().trim().email().required().messages({
+        'string.base': 'Email should be a string.',
+        'string.empty': 'Email address cannot be empty.',
         'string.email': 'Please provide a valid email address.',
-        'any.required': 'Email is required.',
+        'any.required': 'Email address is required.',
     }),
-    password: Joi.string()
-        .min(8)
-        .regex(/^[a-z0-9!@#$%^&*()\-_=+{};:'",.<>/?\\|[\]~`]+$/)
-        .required()
-        .messages({
-            'string.min':
-                'Password should be at least {#limit} characters long.',
-            'string.regex':
-                'Password should contain lowercase letters, numbers, and special characters.',
-            'any.required': 'Password is required.',
-        }),
+    password: Joi.string().min(8).trim().required().messages({
+        'string.base': 'Password should be a string.',
+        'string.empty': 'Password cannot be empty.',
+        'string.min': 'Password should be at least {#limit} characters long.',
+        'any.required': 'Password is required.',
+    }),
     confirmPassword: Joi.valid(Joi.ref('password')).required().messages({
         'any.only': 'Confirm password must match the password.',
         'any.required': 'Confirm password is required.',
     }),
-    carType: Joi.string().required().messages({
-        'any.required': 'Car type is required.',
-    }),
+    carType: Joi.string()
+        .regex(/^[a-zA-Z\s]+$/i)
+        .trim()
+        .valid('SEDAN', 'SUV', 'HATCHBACK', 'TRUCK', 'OTHER')
+        .required()
+        .messages({
+            'string.base': 'Car type should be a string.',
+            'string.empty': 'Car type cannot be empty.',
+            'any.only': 'Invalid car type.',
+            'any.required': 'Car type is required.',
+        }),
     zipCode: Joi.string().trim().allow('').required().messages({
+        'string.base': 'Zip code should be a string.',
         'string.empty': 'Zip code cannot be empty.',
         'any.required': 'Zip code is required.',
     }),
     city: Joi.string()
         .trim()
-        .regex(/^[a-z]+$/)
+        .regex(/^[a-zA-Z\s]+$/i)
         .required()
         .messages({
-            'string.pattern.base':
-                'City should contain only lowercase letters.',
+            'string.base': 'City should be a string.',
             'string.empty': 'City cannot be empty.',
+            'string.lowercase': 'City should contain only lowercase letters.',
+            'string.uppercase': 'City should contain only uppercase letters.',
             'any.required': 'City is required.',
         }),
     country: Joi.string()
+        .regex(/^[a-zA-Z\s]+$/i)
         .trim()
-        .regex(/^[a-z]+$/)
         .required()
         .messages({
-            'string.pattern.base':
-                'Country should contain only lowercase letters.',
+            'string.base': 'Country should be a string.',
             'string.empty': 'Country cannot be empty.',
+            'string.lowercase':
+                'Country should contain only lowercase letters.',
+            'string.uppercase':
+                'Country should contain only uppercase letters.',
             'any.required': 'Country is required.',
         }),
 }).options({ abortEarly: false })
