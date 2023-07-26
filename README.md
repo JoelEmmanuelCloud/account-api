@@ -22,7 +22,7 @@ To get the development environment up and running, follow these steps:
 1. Clone the repository from GitHub Repo:
 
     ```bash
-    git clone https://github.com/JoelEmmanuelCloud/accountapi
+    git clone https://github.com/JoelEmmanuelCloud/account-api
     ```
 
 2. Set up the environment variables:
