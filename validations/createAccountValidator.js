@@ -14,7 +14,8 @@ const createAccountJoiSchema = Joi.object({
                 'First name should be at least {#limit} characters long.',
             'string.max':
                 'First name cannot be longer than {#limit} characters.',
-            'string.regex': 'First name should contain only letters, spaces, hyphens, and apostrophes.',
+            'string.regex':
+                'First name should contain only letters, spaces, hyphens, and apostrophes.',
             'any.required': 'First name is required.',
         }),
     lastName: Joi.string()
@@ -30,7 +31,8 @@ const createAccountJoiSchema = Joi.object({
                 'Last name should be at least {#limit} characters long.',
             'string.max':
                 'Last name cannot be longer than {#limit} characters.',
-            'string.regex': 'Last name should contain only letters, spaces, hyphens, and apostrophes.',
+            'string.regex':
+                'Last name should contain only letters, spaces, hyphens, and apostrophes.',
             'any.required': 'Last name is required.',
         }),
     email: Joi.string().trim().email().required().messages({
@@ -71,7 +73,8 @@ const createAccountJoiSchema = Joi.object({
         .messages({
             'string.base': 'City should be a string.',
             'string.empty': 'City cannot be empty.',
-            'string.regex': 'City should contain only letters, spaces, hyphens, and apostrophes.',
+            'string.regex':
+                'City should contain only letters, spaces, hyphens, and apostrophes.',
             'any.required': 'City is required.',
         }),
     country: Joi.string()
@@ -81,7 +84,8 @@ const createAccountJoiSchema = Joi.object({
         .messages({
             'string.base': 'Country should be a string.',
             'string.empty': 'Country cannot be empty.',
-            'string.regex': 'Country should contain only letters, spaces, hyphens, and apostrophes.',
+            'string.regex':
+                'Country should contain only letters, spaces, hyphens, and apostrophes.',
             'any.required': 'Country is required.',
         }),
 }).options({ abortEarly: false })

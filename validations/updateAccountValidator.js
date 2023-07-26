@@ -12,7 +12,8 @@ const updateAccountJoiSchema = Joi.object({
                 'First name should be at least {#limit} characters long.',
             'string.max':
                 'First name cannot be longer than {#limit} characters.',
-            'string.regex': 'First name should contain only letters, spaces, hyphens, and apostrophes.',
+            'string.regex':
+                'First name should contain only letters, spaces, hyphens, and apostrophes.',
             'any.required': 'First name is required.',
         }),
     lastName: Joi.string()
@@ -26,7 +27,8 @@ const updateAccountJoiSchema = Joi.object({
                 'Last name should be at least {#limit} characters long.',
             'string.max':
                 'Last name cannot be longer than {#limit} characters.',
-            'string.regex': 'Last name should contain only letters, spaces, hyphens, and apostrophes.',
+            'string.regex':
+                'Last name should contain only letters, spaces, hyphens, and apostrophes.',
             'any.required': 'Last name is required.',
         }),
     email: Joi.string().trim().email().messages({
@@ -60,7 +62,8 @@ const updateAccountJoiSchema = Joi.object({
         .messages({
             'string.empty': 'City cannot be empty.',
             'string.max': 'City cannot be longer than {#limit} characters.',
-            'string.regex': 'City should contain only letters, spaces, hyphens, and apostrophes.',
+            'string.regex':
+                'City should contain only letters, spaces, hyphens, and apostrophes.',
             'any.required': 'City is required.',
         }),
     country: Joi.string()
@@ -70,7 +73,8 @@ const updateAccountJoiSchema = Joi.object({
         .messages({
             'string.empty': 'Country cannot be empty.',
             'string.max': 'Country cannot be longer than {#limit} characters.',
-            'string.regex': 'Country should contain only letters, spaces, hyphens, and apostrophes.',
+            'string.regex':
+                'Country should contain only letters, spaces, hyphens, and apostrophes.',
             'any.required': 'Country is required.',
         }),
 }).options({ abortEarly: false })
