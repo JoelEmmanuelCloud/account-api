@@ -70,7 +70,7 @@ Once the application is up and running, users can interact with it through API e
 -   Request Body:
     account/createAccount
 
-        ```json
+        ``` json
         {
         "firstName": "John",
         "lastName": "Doe",
