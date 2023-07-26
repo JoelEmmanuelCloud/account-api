@@ -14,7 +14,7 @@ const updateAccountJoiSchema = Joi.object({
                 'First name cannot be longer than {#limit} characters.',
             'string.regex':
                 'First name should contain only letters, spaces, hyphens, and apostrophes.',
-            'any.required': 'First name is required.',
+            
         }),
     lastName: Joi.string()
         .trim()
@@ -29,9 +29,10 @@ const updateAccountJoiSchema = Joi.object({
                 'Last name cannot be longer than {#limit} characters.',
             'string.regex':
                 'Last name should contain only letters, spaces, hyphens, and apostrophes.',
-            'any.required': 'Last name is required.',
+            
         }),
     email: Joi.string().trim().email().messages({
+        'string.base': 'Email should be a string.',
         'string.empty': 'Email address cannot be empty.',
         'string.email': 'Please provide a valid email address.',
     }),
@@ -39,7 +40,7 @@ const updateAccountJoiSchema = Joi.object({
         'string.empty': 'Password cannot be empty.',
         'string.min': 'Password should be at least {#limit} characters long.',
         'string.max': 'Password cannot be longer than {#limit} characters.',
-        'any.required': 'Password is required.',
+        
     }),
     confirmPassword: Joi.valid(Joi.ref('password')).messages({
         'any.only': 'Confirm password must match the password.',
@@ -48,11 +49,13 @@ const updateAccountJoiSchema = Joi.object({
         .trim()
         .valid('SEDAN', 'SUV', 'HATCHBACK', 'TRUCK', 'OTHER')
         .messages({
+            'string.base': 'Car type should be a string.',
             'string.empty': 'Car type cannot be empty.',
-            'string.regex':
-                'Car type should contain only uppercase or lowercase letters.',
+            'any.only': 'Invalid car type.',
+            
         }),
     zipCode: Joi.string().allow('').messages({
+        'string.base': 'Zip code should be a string.',
         'string.empty': 'Zip code cannot be empty.',
     }),
     city: Joi.string()
@@ -60,11 +63,11 @@ const updateAccountJoiSchema = Joi.object({
         .max(100)
         .regex(/^[a-zA-Z\s'-]+$/i)
         .messages({
+            'string.base': 'City should be a string.',
             'string.empty': 'City cannot be empty.',
-            'string.max': 'City cannot be longer than {#limit} characters.',
             'string.regex':
                 'City should contain only letters, spaces, hyphens, and apostrophes.',
-            'any.required': 'City is required.',
+            
         }),
     country: Joi.string()
         .trim()
@@ -75,7 +78,7 @@ const updateAccountJoiSchema = Joi.object({
             'string.max': 'Country cannot be longer than {#limit} characters.',
             'string.regex':
                 'Country should contain only letters, spaces, hyphens, and apostrophes.',
-            'any.required': 'Country is required.',
+            
         }),
 }).options({ abortEarly: false })
 
