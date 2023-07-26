@@ -5,7 +5,7 @@ const createAccountJoiSchema = Joi.object({
         .trim()
         .min(2)
         .max(50)
-        .regex(/^[a-zA-Z\s]+$/i)
+        .regex(/^[a-zA-Z\s'-]+$/i)
         .required()
         .messages({
             'string.base': 'First name should be a string.',
@@ -14,17 +14,14 @@ const createAccountJoiSchema = Joi.object({
                 'First name should be at least {#limit} characters long.',
             'string.max':
                 'First name cannot be longer than {#limit} characters.',
-            'string.lowercase':
-                'First name should contain only lowercase letters.',
-            'string.uppercase':
-                'First name should contain only uppercase letters.',
+            'string.regex': 'First name should contain only letters, spaces, hyphens, and apostrophes.',
             'any.required': 'First name is required.',
         }),
     lastName: Joi.string()
         .trim()
         .min(2)
         .max(50)
-        .regex(/^[a-zA-Z\s]+$/i)
+        .regex(/^[a-zA-Z\s'-]+$/i)
         .required()
         .messages({
             'string.base': 'Last name should be a string.',
@@ -33,10 +30,7 @@ const createAccountJoiSchema = Joi.object({
                 'Last name should be at least {#limit} characters long.',
             'string.max':
                 'Last name cannot be longer than {#limit} characters.',
-            'string.lowercase':
-                'Last name should contain only lowercase letters.',
-            'string.uppercase':
-                'Last name should contain only uppercase letters.',
+            'string.regex': 'Last name should contain only letters, spaces, hyphens, and apostrophes.',
             'any.required': 'Last name is required.',
         }),
     email: Joi.string().trim().email().required().messages({
@@ -56,7 +50,6 @@ const createAccountJoiSchema = Joi.object({
         'any.required': 'Confirm password is required.',
     }),
     carType: Joi.string()
-        .regex(/^[a-zA-Z\s]+$/i)
         .trim()
         .valid('SEDAN', 'SUV', 'HATCHBACK', 'TRUCK', 'OTHER')
         .required()
@@ -66,33 +59,29 @@ const createAccountJoiSchema = Joi.object({
             'any.only': 'Invalid car type.',
             'any.required': 'Car type is required.',
         }),
-    zipCode: Joi.string().trim().allow('').required().messages({
+    zipCode: Joi.string().allow('').required().messages({
         'string.base': 'Zip code should be a string.',
         'string.empty': 'Zip code cannot be empty.',
         'any.required': 'Zip code is required.',
     }),
     city: Joi.string()
         .trim()
-        .regex(/^[a-zA-Z\s]+$/i)
+        .regex(/^[a-zA-Z\s'-]+$/i)
         .required()
         .messages({
             'string.base': 'City should be a string.',
             'string.empty': 'City cannot be empty.',
-            'string.lowercase': 'City should contain only lowercase letters.',
-            'string.uppercase': 'City should contain only uppercase letters.',
+            'string.regex': 'City should contain only letters, spaces, hyphens, and apostrophes.',
             'any.required': 'City is required.',
         }),
     country: Joi.string()
-        .regex(/^[a-zA-Z\s]+$/i)
+        .regex(/^[a-zA-Z\s'-]+$/i)
         .trim()
         .required()
         .messages({
             'string.base': 'Country should be a string.',
             'string.empty': 'Country cannot be empty.',
-            'string.lowercase':
-                'Country should contain only lowercase letters.',
-            'string.uppercase':
-                'Country should contain only uppercase letters.',
+            'string.regex': 'Country should contain only letters, spaces, hyphens, and apostrophes.',
             'any.required': 'Country is required.',
         }),
 }).options({ abortEarly: false })
