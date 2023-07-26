@@ -20,9 +20,7 @@ const createAccount = async (req, res) => {
 
 const getCurrentAccount = async (req, res) => {
     const loggedInUserId = req.user.userId
-    const user = await User.findOne({ _id: loggedInUserId }).select(
-        '-password'
-    )
+    const user = await User.findOne({ _id: loggedInUserId }).select('-password')
 
     if (!user) {
         throw new CustomError.NotFoundError(
