@@ -22,7 +22,7 @@ To get the development environment up and running, follow these steps:
 1. Clone the repository from GitHub Repo:
 
     ```bash
-    git clone https://github.com/JoelEmmanuelCloud/account-api
+    git clone https://github.com/JoelEmmanuelCloud/account-api.git
     ```
 
 2. Set up the environment variables:
@@ -71,7 +71,7 @@ Once the application is running, users can interact with it through API endpoint
     account/createAccount
 
   ```json
-        {
+      {
         "firstName": "John",
         "lastName": "Doe",
         "email": "john.doe@provider.com",
@@ -81,7 +81,7 @@ Once the application is running, users can interact with it through API endpoint
         "zipCode": "93950-000",
         "city": "Anywhere City",
         "country": "Brazil"
-        }
+      }
   ```
 
 #### Expected Response
