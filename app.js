@@ -7,7 +7,6 @@ const cookieParser = require('cookie-parser')
 const authRouter = require('./routes/authRoute')
 const accountRouter = require('./routes/accountRoute')
 const express = require('express')
-const morgan = require('morgan')
 
 const app = express()
 
