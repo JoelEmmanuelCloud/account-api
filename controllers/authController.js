@@ -21,11 +21,11 @@ const login = async (req, res) => {
         throw new CustomError.UnauthenticatedError('Invalid Password')
     }
     const tokenUser = createTokenUser(user)
-    attachCookiesToResponse({ res, user: tokenUser })
+    attachCookiesToResponse({ res, user: tokenUser });
 
-    const { signature, token } = req.signedCookies
+    const token  = req.signedCookies.token;
 
-    res.status(StatusCodes.OK).json({ token, user: tokenUser })
+    res.status(StatusCodes.OK).json({ token, user: tokenUser });
 }
 
 const logout = async (req, res) => {
