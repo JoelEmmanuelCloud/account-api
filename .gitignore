@@ -1,2 +1,4 @@
 /node_modules
 .env
+.eslintc.json
+.prettierrc.json
